@@ -5,11 +5,11 @@
 Network Working Group                                            E. Chen
 Internet-Draft                                        Palo Alto Networks
 Intended status: Standards Track                                 N. Shen
-Expires: May 25, 2022                                             Zededa
+Expires: May 27, 2022                                             Zededa
                                                                R. Raszuk
                                                  NTT Network Innovations
                                                                R. Rahman
-                                                       November 21, 2021
+                                                       November 23, 2021
 
 
               Unsolicited BFD for Sessionless Applications
@@ -53,12 +53,12 @@ Status of This Memo
 
 
 
-Chen, et al.              Expires May 25, 2022                  [Page 1]
+Chen, et al.              Expires May 27, 2022                  [Page 1]
 
 Internet-DraftUnsolicited BFD for Sessionless Applications November 2021
 
 
-   This Internet-Draft will expire on May 25, 2022.
+   This Internet-Draft will expire on May 27, 2022.
 
 Copyright Notice
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Chen, et al.              Expires May 25, 2022                  [Page 2]
+Chen, et al.              Expires May 27, 2022                  [Page 2]
 
 Internet-DraftUnsolicited BFD for Sessionless Applications November 2021
 
@@ -165,7 +165,7 @@ Internet-DraftUnsolicited BFD for Sessionless Applications November 2021
 
 
 
-Chen, et al.              Expires May 25, 2022                  [Page 3]
+Chen, et al.              Expires May 27, 2022                  [Page 3]
 
 Internet-DraftUnsolicited BFD for Sessionless Applications November 2021
 
@@ -221,7 +221,7 @@ Internet-DraftUnsolicited BFD for Sessionless Applications November 2021
 
 
 
-Chen, et al.              Expires May 25, 2022                  [Page 4]
+Chen, et al.              Expires May 27, 2022                  [Page 4]
 
 Internet-DraftUnsolicited BFD for Sessionless Applications November 2021
 
@@ -277,7 +277,7 @@ Internet-DraftUnsolicited BFD for Sessionless Applications November 2021
 
 
 
-Chen, et al.              Expires May 25, 2022                  [Page 5]
+Chen, et al.              Expires May 27, 2022                  [Page 5]
 
 Internet-DraftUnsolicited BFD for Sessionless Applications November 2021
 
@@ -286,7 +286,7 @@ Internet-DraftUnsolicited BFD for Sessionless Applications November 2021
      augment /rt:routing/rt:control-plane-protocols
                /rt:control-plane-protocol/bfd:bfd/bfd-ip-sh:ip-sh:
        +--rw unsolicited {bfd-unsol:unsolicited-params-global}?
-          +--rw enable?                           boolean
+          +--rw enabled?                          boolean
           +--rw local-multiplier?                 multiplier
           +--rw (interval-config-type)?
              +--:(tx-rx-intervals)
@@ -298,7 +298,7 @@ Internet-DraftUnsolicited BFD for Sessionless Applications November 2021
                /rt:control-plane-protocol/bfd:bfd/bfd-ip-sh:ip-sh
                /bfd-ip-sh:interfaces:
        +--rw unsolicited {bfd-unsol:unsolicited-params-per-interface}?
-          +--rw enable?                           boolean
+          +--rw enabled                           boolean
           +--rw local-multiplier?                 multiplier
           +--rw (interval-config-type)?
              +--:(tx-rx-intervals)
@@ -315,203 +315,208 @@ Internet-DraftUnsolicited BFD for Sessionless Applications November 2021
 
 4.2.  Unsolicited BFD Module
 
-<CODE BEGINS> file "ietf-bfd-unsolicited@2021-11-21.yang"
-module ietf-bfd-unsolicited {
+ <CODE BEGINS> file "ietf-bfd-unsolicited@2021-11-23.yang"
+ module ietf-bfd-unsolicited {
 
-  yang-version 1.1;
+   yang-version 1.1;
 
-  namespace "urn:ietf:params:xml:ns:yang:ietf-bfd-unsolicited";
+   namespace "urn:ietf:params:xml:ns:yang:ietf-bfd-unsolicited";
 
-  prefix "bfd-unsol";
+   prefix "bfd-unsol";
 
-  // RFC Ed.: replace occurences of YYYY with actual RFC numbers
-  // and remove this note
+   // RFC Ed.: replace occurences of YYYY with actual RFC numbers
+   // and remove this note
 
-  import ietf-bfd-types {
-    prefix "bfd-types";
-    reference
+   import ietf-bfd-types {
+     prefix "bfd-types";
+     reference
 
 
 
-Chen, et al.              Expires May 25, 2022                  [Page 6]
+Chen, et al.              Expires May 27, 2022                  [Page 6]
 
 Internet-DraftUnsolicited BFD for Sessionless Applications November 2021
 
 
-      "RFC 9127: YANG Data Model for Bidirectional Forwarding Detection
-      (BFD)";
-  }
-
-  import ietf-bfd {
-    prefix "bfd";
-    reference
-      "RFC 9127: YANG Data Model for Bidirectional Forwarding Detection
+       "RFC 9127: YANG Data Model for Bidirectional Forwarding Detection
        (BFD)";
-  }
+   }
 
-  import ietf-bfd-ip-sh {
-    prefix "bfd-ip-sh";
-    reference
-      "RFC 9127: YANG Data Model for Bidirectional Forwarding Detection
-      (BFD)";
-  }
+   import ietf-bfd {
+     prefix "bfd";
+     reference
+       "RFC 9127: YANG Data Model for Bidirectional Forwarding Detection
+        (BFD)";
+   }
 
-  import ietf-routing {
-    prefix "rt";
-    reference
-      "RFC 8349: A YANG Data Model for Routing Management
-       (NMDA version)";
-  }
+   import ietf-bfd-ip-sh {
+     prefix "bfd-ip-sh";
+     reference
+       "RFC 9127: YANG Data Model for Bidirectional Forwarding Detection
+       (BFD)";
+   }
 
-  organization "IETF BFD Working Group";
+   import ietf-routing {
+     prefix "rt";
+     reference
+       "RFC 8349: A YANG Data Model for Routing Management
+        (NMDA version)";
+   }
 
-  contact
-    "WG Web:   <https://datatracker.ietf.org/wg/bfd/>
-     WG List:  <rtg-bfd@ietf.org>
+   organization "IETF BFD Working Group";
 
-     Editors:  Enke Chen (enchen@paloaltonetworks.com),
-               Naiming Shen (naiming@zededa.com),
-               Robert Raszuk (robert@raszuk.net),
-               Reshad Rahman (reshad@yahoo.com)";
+   contact
+     "WG Web:   <https://datatracker.ietf.org/wg/bfd/>
+      WG List:  <rtg-bfd@ietf.org>
 
-  description
-    "This module contains the YANG definition for BFD unsolicited
-     as per RFC YYYY.
+      Editors:  Enke Chen (enchen@paloaltonetworks.com),
+                Naiming Shen (naiming@zededa.com),
+                Robert Raszuk (robert@raszuk.net),
+                Reshad Rahman (reshad@yahoo.com)";
 
-     Copyright (c) 2021 IETF Trust and the persons
-     identified as authors of the code.  All rights reserved.
+   description
+     "This module contains the YANG definition for BFD unsolicited
+      as per RFC YYYY.
 
-     Redistribution and use in source and binary forms, with or
-     without modification, is permitted pursuant to, and subject
-     to the license terms contained in, the Simplified BSD License
-     set forth in Section 4.c of the IETF Trust's Legal Provisions
-     Relating to IETF Documents
+      Copyright (c) 2021 IETF Trust and the persons
+      identified as authors of the code.  All rights reserved.
+
+      Redistribution and use in source and binary forms, with or
+      without modification, is permitted pursuant to, and subject
+      to the license terms contained in, the Simplified BSD License
+      set forth in Section 4.c of the IETF Trust's Legal Provisions
+      Relating to IETF Documents
 
 
 
-Chen, et al.              Expires May 25, 2022                  [Page 7]
+Chen, et al.              Expires May 27, 2022                  [Page 7]
 
 Internet-DraftUnsolicited BFD for Sessionless Applications November 2021
 
 
-     (http://trustee.ietf.org/license-info).
+      (http://trustee.ietf.org/license-info).
 
-     This version of this YANG module is part of RFC YYYY; see
-     the RFC itself for full legal notices.";
+      This version of this YANG module is part of RFC YYYY; see
+      the RFC itself for full legal notices.";
 
-  reference "RFC YYYY";
+   reference "RFC YYYY";
 
-  revision 2021-11-21 {
-    description "Initial revision.";
-    reference "RFC YYYY: Unsolicited BFD for Sessionless Applications.";
-  }
+   revision 2021-11-23 {
+     description
+       "Initial revision.";
+     reference
+       "RFC YYYY: Unsolicited BFD for Sessionless Applications.";
+   }
 
-  /*
-   * Feature definitions
-   */
-  feature unsolicited-params-global {
-    description
-      "This feature indicates that the server supports global
-       parameters for unsolicited sessions.";
-    reference "RFC YYYY: Unsolicited BFD for Sessionless Applications.";
-  }
+   /*
+    * Feature definitions
+    */
+   feature unsolicited-params-global {
+     description
+       "This feature indicates that the server supports global
+        parameters for unsolicited sessions.";
+     reference
+       "RFC YYYY: Unsolicited BFD for Sessionless Applications.";
+   }
 
-  feature unsolicited-params-per-interface {
-    description
-      "This feature indicates that the server supports per-interface
-       parameters for unsolicited sessions.";
-    reference "RFC YYYY: Unsolicited BFD for Sessionless Applications.";
-  }
+   feature unsolicited-params-per-interface {
+     description
+       "This feature indicates that the server supports per-interface
+        parameters for unsolicited sessions.";
+     reference
+       "RFC YYYY: Unsolicited BFD for Sessionless Applications.";
+   }
 
-  /*
-   * Type Definitions
-   */
-  typedef unsolicited-role {
-    type enumeration {
-      enum unsolicited-active {
-        description "Active role";
-      }
-      enum unsolicited-passive {
-        description "Passive role";
+   /*
+    * Type Definitions
+    */
+   typedef unsolicited-role {
+     type enumeration {
+       enum unsolicited-active {
+         description "Active role";
+       }
+       enum unsolicited-passive {
+         description "Passive role";
+       }
+     }
+     description "Unsolicited role";
+   }
+
+
+
+
+Chen, et al.              Expires May 27, 2022                  [Page 8]
+
+Internet-DraftUnsolicited BFD for Sessionless Applications November 2021
+
+
+   /*
+    * Augments
+    */
+    augment "/rt:routing/rt:control-plane-protocols/"
+          + "rt:control-plane-protocol/bfd:bfd/bfd-ip-sh:ip-sh" {
+      if-feature bfd-unsol:unsolicited-params-global;
+      description
+        "Augmentation for BFD unsolicited parameters";
+      container unsolicited {
+        description
+          "BFD unsolicited top level container";
+        leaf enabled {
+          type boolean;
+          default false;
+          description
+            "BFD unsolicited enabled globally for IP single-hop.";
+        }
+        uses bfd-types:base-cfg-parms;
       }
     }
-    description "Unsolicited role";
-  }
 
-  /*
-   * Augments
-   */
-   augment "/rt:routing/rt:control-plane-protocols/"
-
-
-
-Chen, et al.              Expires May 25, 2022                  [Page 8]
-
-Internet-DraftUnsolicited BFD for Sessionless Applications November 2021
-
-
-         + "rt:control-plane-protocol/bfd:bfd/bfd-ip-sh:ip-sh" {
-     if-feature bfd-unsol:unsolicited-params-global;
-     description
-       "Augmentation for BFD unsolicited parameters";
-     container unsolicited {
-       description
-         "BFD unsolicited top level container";
-       leaf enable {
-         type boolean;
-         default false;
-         description
-           "Enable BFD unsolicited globally for IP single-hop.";
-       }
-       uses bfd-types:base-cfg-parms;
-     }
-   }
+    augment "/rt:routing/rt:control-plane-protocols/"
+          + "rt:control-plane-protocol/bfd:bfd/bfd-ip-sh:ip-sh/"
+          + "bfd-ip-sh:interfaces" {
+      if-feature bfd-unsol:unsolicited-params-per-interface;
+      description
+        "Augmentation for BFD unsolicited on IP single-hop interface";
+      container unsolicited {
+        description
+          "BFD IP single-hop interface unsolicited top level
+           container";
+        leaf enabled {
+          type boolean;
+          default false;
+          description
+            "BFD unsolicited enabled on this interface.";
+        }
+        uses bfd-types:base-cfg-parms;
+      }
+    }
 
    augment "/rt:routing/rt:control-plane-protocols/"
          + "rt:control-plane-protocol/bfd:bfd/bfd-ip-sh:ip-sh/"
-         + "bfd-ip-sh:interfaces" {
-     if-feature bfd-unsol:unsolicited-params-per-interface;
+         + "bfd-ip-sh:sessions/bfd-ip-sh:session" {
      description
-       "Augmentation for BFD unsolicited on IP single-hop interface";
+       "Augmentation for BFD unsolicited on IP single-hop session";
      container unsolicited {
-       description
-         "BFD IP single-hop interface unsolicited top level
-          container";
-       leaf enable {
-         type boolean;
-         default false;
-         description "Enable BFD unsolicited on this interface.";
-       }
-       uses bfd-types:base-cfg-parms;
-     }
-   }
-
-  augment "/rt:routing/rt:control-plane-protocols/"
-        + "rt:control-plane-protocol/bfd:bfd/bfd-ip-sh:ip-sh/"
-        + "bfd-ip-sh:sessions/bfd-ip-sh:session" {
-    description
-      "Augmentation for BFD unsolicited on IP single-hop session";
-    container unsolicited {
-      config false;
-      description
-        "BFD IP single-hop session unsolicited top level container";
-      leaf role {
-        type bfd-unsol:unsolicited-role;
-        description "Role.";
+       config false;
 
 
 
-Chen, et al.              Expires May 25, 2022                  [Page 9]
+Chen, et al.              Expires May 27, 2022                  [Page 9]
 
 Internet-DraftUnsolicited BFD for Sessionless Applications November 2021
 
 
-      }
-    }
-  }
-}
+       description
+         "BFD IP single-hop session unsolicited top level container";
+       leaf role {
+         type bfd-unsol:unsolicited-role;
+         description "Role.";
+       }
+     }
+   }
+ }
 
-<CODE ENDS>
+ <CODE ENDS>
 
 5.  IANA Considerations
 
@@ -550,18 +555,17 @@ Internet-DraftUnsolicited BFD for Sessionless Applications November 2021
    excessive resource usage by BFD from "unexpected" remote systems.  To
    mitigate such risks, the following measures are mandatory:
 
-   o  Limit the feature to specific interfaces, and to a single-hop BFD
-      with "TTL=255" [RFC5082].  For numbered interfaces, the source
-      address of an incoming BFD packet should belong to the subnet of
-      the interface on which the BFD packet is received.  For unnumbered
 
 
-
-Chen, et al.              Expires May 25, 2022                 [Page 10]
+Chen, et al.              Expires May 27, 2022                 [Page 10]
 
 Internet-DraftUnsolicited BFD for Sessionless Applications November 2021
 
 
+   o  Limit the feature to specific interfaces, and to a single-hop BFD
+      with "TTL=255" [RFC5082].  For numbered interfaces, the source
+      address of an incoming BFD packet should belong to the subnet of
+      the interface on which the BFD packet is received.  For unnumbered
       interfaces the above check should be aligned with routing protocol
       addresses running on such pair of interfaces.
    o  Apply "policy" to allow BFD packets only from certain subnets or
@@ -598,7 +602,7 @@ Internet-DraftUnsolicited BFD for Sessionless Applications November 2021
    /routing/control-plane-protocols/control-plane-protocol/bfd/ip-sh
    /unsolicited:
 
-   o  data node "enable" enables creation of unsolicited BFD IP single-
+   o  data node "enabled" enables creation of unsolicited BFD IP single-
       hop sessions globally, i.e. on all interfaces.  See Section 7.1.
    o  data nodes local-multiplier, desired-min-tx-interval, required-
       min-rx-interval and min-interval all impact the parameters of the
@@ -607,17 +611,15 @@ Internet-DraftUnsolicited BFD for Sessionless Applications November 2021
    /routing/control-plane-protocols/control-plane-protocol/bfd/ip-sh
    /interfaces/interface/unsolicited:
 
-   o  data node "enable" enables creation of unsolicited BFD IP single-
-      hop sessions on a specific interface.  See Section 7.1.
 
 
-
-
-Chen, et al.              Expires May 25, 2022                 [Page 11]
+Chen, et al.              Expires May 27, 2022                 [Page 11]
 
 Internet-DraftUnsolicited BFD for Sessionless Applications November 2021
 
 
+   o  data node "enabled" enables creation of unsolicited BFD IP single-
+      hop sessions on a specific interface.  See Section 7.1.
    o  data nodes local-multiplier, desired-min-tx-interval, required-
       min-rx-interval and min-interval all impact the parameters of the
       unsolicited BFD IP single-hop sessions on the interface.
@@ -667,9 +669,7 @@ Internet-DraftUnsolicited BFD for Sessionless Applications November 2021
 
 
 
-
-
-Chen, et al.              Expires May 25, 2022                 [Page 12]
+Chen, et al.              Expires May 27, 2022                 [Page 12]
 
 Internet-DraftUnsolicited BFD for Sessionless Applications November 2021
 
@@ -725,7 +725,7 @@ Internet-DraftUnsolicited BFD for Sessionless Applications November 2021
 
 
 
-Chen, et al.              Expires May 25, 2022                 [Page 13]
+Chen, et al.              Expires May 27, 2022                 [Page 13]
 
 Internet-DraftUnsolicited BFD for Sessionless Applications November 2021
 
@@ -781,4 +781,4 @@ Authors' Addresses
 
 
 
-Chen, et al.              Expires May 25, 2022                 [Page 14]
+Chen, et al.              Expires May 27, 2022                 [Page 14]
