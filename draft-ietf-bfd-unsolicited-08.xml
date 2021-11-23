@@ -16,8 +16,11 @@
 <!ENTITY RFC8174 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml">
 <!ENTITY RFC3688 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.3688.xml">
 <!ENTITY RFC6020 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6020.xml">
+<!ENTITY RFC8340 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8340.xml">
+<!ENTITY RFC8342 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8342.xml">
+<!ENTITY RFC9127 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9127.xml">
+
 <!-- <!ENTITY RFC8174 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9127.xml"> -->
-<!ENTITY I-D.ietf-bfd-yang SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-bfd-yang.xml">
 <!ENTITY I-D.ietf-idr-rs-bfd SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-idr-rs-bfd.xml">
 ]>
 <?rfc comments="yes"?>
@@ -82,7 +85,7 @@
 		<email>reshad@yahoo.com</email>
 	    </address>
 	</author>
-	<date day="5" month="November" year="2021" />
+	<date day="21" month="November" year="2021" />
 
 	<abstract>
 	    <t>
@@ -91,7 +94,12 @@
 	    for "unsolicited BFD" that allow a BFD session to be initiated
 	    by only one side, and be established without explicit per-session
 	    configuration or registration by the other side (subject to certain
-	    per-interface or per-router policies).
+	    per-interface or per-router policies). 
+            </t>
+            <t>
+            We also introduce a new YANG module
+            to configure and manage "unsolicited BFD". The YANG module in this document
+            conforms to the Network Management Datastore Architecture (NMDA) <xref target="RFC8342"/>.
 	    </t>
 	</abstract>
 
@@ -257,11 +265,19 @@
 
 	<section title="YANG Data Model">
 	    <t>
-            This section extends the YANG data model for BFD <xref target="I-D.ietf-bfd-yang"/>
-	    <!--<xref target="RFC9127"/>--> to cover the unsolicited BFD.
+            This section extends the YANG data model for BFD <xref target="RFC9127"/>
+	    <!--<xref target="RFC9127"/>--> to cover unsolicited BFD.
 	    </t>
             
             <section title="Unsolicited BFD Hierarchy">
+            <t>Configuration for unsolicited BFD parameters for IP single-hop sessions can be done at 2 levels:
+            <list style="symbols">
+            <t>Globally, i.e. for all interfaces. This requires support for the "unsolicited-params-global" feature.</t>
+            <t>For specific interfaces. This requires support for the "unsolicited-params-per-interface" feature.</t>
+            </list>
+            </t>
+            <t>For operational data, a new "unsolicited" container has been added for BFD IP single-hop sessions.</t>
+            <t>The tree diagram below uses the graphical representation of data models, as defined in <xref target="RFC8340"/>.</t>
         <figure align="left">
           <preamble/>
 
@@ -305,7 +321,7 @@ module: ietf-bfd-unsolicited
 	  <preamble/>
 
           <artwork align="left"><![CDATA[
-<CODE BEGINS> file "ietf-bfd-unsolicited@2021-11-05.yang"
+<CODE BEGINS> file "ietf-bfd-unsolicited@2021-11-21.yang"
 module ietf-bfd-unsolicited {
 
   yang-version 1.1;
@@ -319,17 +335,23 @@ module ietf-bfd-unsolicited {
 
   import ietf-bfd-types {
     prefix "bfd-types";
-    reference "RFC 9127: YANG Data Model for BFD";
+    reference 
+      "RFC 9127: YANG Data Model for Bidirectional Forwarding Detection
+      (BFD)";
   }
 
   import ietf-bfd {
     prefix "bfd";
-    reference "RFC 9127: YANG Data Model for BFD";
+    reference 
+      "RFC 9127: YANG Data Model for Bidirectional Forwarding Detection
+       (BFD)";
   }
 
   import ietf-bfd-ip-sh {
     prefix "bfd-ip-sh";
-    reference "RFC 9127: YANG Data Model for BFD";
+    reference
+      "RFC 9127: YANG Data Model for Bidirectional Forwarding Detection
+      (BFD)";
   }
 
   import ietf-routing {
@@ -369,7 +391,7 @@ module ietf-bfd-unsolicited {
 
   reference "RFC YYYY";
 
-  revision 2021-11-05 {
+  revision 2021-11-21 {
     description "Initial revision.";
     reference "RFC YYYY: Unsolicited BFD for Sessionless Applications.";
   }
@@ -377,16 +399,18 @@ module ietf-bfd-unsolicited {
   /*
    * Feature definitions
    */
-   feature unsolicited-params-global {
-     description
-       "This feature indicates that the server supports global
-        parameters for unsolicited sessions.";
-   }
+  feature unsolicited-params-global {
+    description
+      "This feature indicates that the server supports global
+       parameters for unsolicited sessions.";
+    reference "RFC YYYY: Unsolicited BFD for Sessionless Applications.";
+  }
 
   feature unsolicited-params-per-interface {
     description
       "This feature indicates that the server supports per-interface
        parameters for unsolicited sessions.";
+    reference "RFC YYYY: Unsolicited BFD for Sessionless Applications.";
   }
 
   /*
@@ -428,10 +452,10 @@ module ietf-bfd-unsolicited {
    augment "/rt:routing/rt:control-plane-protocols/"
          + "rt:control-plane-protocol/bfd:bfd/bfd-ip-sh:ip-sh/"
          + "bfd-ip-sh:interfaces" {
+     if-feature bfd-unsol:unsolicited-params-per-interface;
      description
        "Augmentation for BFD unsolicited on IP single-hop interface";
      container unsolicited {
-       if-feature bfd-unsol:unsolicited-params-per-interface;
        description
          "BFD IP single-hop interface unsolicited top level 
           container";
@@ -507,13 +531,13 @@ module ietf-bfd-unsolicited {
      <list style="symbols">
 	   <t>
      Limit the feature to specific interfaces, and to a single-hop BFD with "TTL=255" 
-     <xref target="RFC5082"/>. For numbered interfaces source address of an incoming 
-     BFD packet should belongs to the subnet of the interface from which the BFD 
+     <xref target="RFC5082"/>. For numbered interfaces, the source address of an incoming 
+     BFD packet should belong to the subnet of the interface on which the BFD 
      packet is received. For unnumbered interfaces the above check should be aligned 
      with routing protocol addresses running on such pair of interfaces.
      </t>
      <t>
-     Apply "access control" to allow BFD packets only from certain subnets or hosts.
+     Apply "policy" to allow BFD packets only from certain subnets or hosts.
       </t>
 	    <t>
      Deploy the feature only in certain "trustworthy" environment, e.g., at an IXP, 
@@ -601,15 +625,16 @@ module ietf-bfd-unsolicited {
 	    &RFC6536;
 	    &RFC8040;
 	    &RFC8174;
+	    &RFC8340;
 	    &RFC8446;
-	    &I-D.ietf-bfd-yang;
-<!--  &RFC9127;-->
+	    &RFC9127;
 	</references>
 	<references title="Informative References">
 	    &RFC4271;
 	    &RFC7880;
 	    &RFC7911;
 	    &RFC7947;
+	    &RFC8342;
 	    &I-D.ietf-idr-rs-bfd;
 	</references>
     </back>
