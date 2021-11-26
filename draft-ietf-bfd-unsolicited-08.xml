@@ -11,13 +11,14 @@
 <!ENTITY RFC8446 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8446.xml">
 <!ENTITY RFC6241 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6241.xml">
 <!ENTITY RFC6242 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6242.xml">
-<!ENTITY RFC6536 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6536.xml">
+<!ENTITY RFC8341 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8341.xml">
 <!ENTITY RFC8040 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8040.xml">
 <!ENTITY RFC8174 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml">
 <!ENTITY RFC3688 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.3688.xml">
 <!ENTITY RFC6020 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6020.xml">
 <!ENTITY RFC8340 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8340.xml">
 <!ENTITY RFC8342 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8342.xml">
+<!ENTITY RFC8349 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8349.xml">
 <!ENTITY RFC9127 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9127.xml">
 
 <!-- <!ENTITY RFC8174 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9127.xml"> -->
@@ -85,7 +86,7 @@
 		<email>reshad@yahoo.com</email>
 	    </address>
 	</author>
-	<date day="23" month="November" year="2021" />
+	<date day="26" month="November" year="2021" />
 
 	<abstract>
 	    <t>
@@ -266,7 +267,8 @@
 	<section title="YANG Data Model">
 	    <t>
             This section extends the YANG data model for BFD <xref target="RFC9127"/>
-	    <!--<xref target="RFC9127"/>--> to cover unsolicited BFD.
+	    to cover unsolicited BFD. We import <xref target="RFC8349"/> since the "bfd"
+            container in <xref target="RFC9127"/> is under "control-plane-protocol".
 	    </t>
             
             <section title="Unsolicited BFD Hierarchy">
@@ -567,7 +569,7 @@ module ietf-bfd-unsolicited {
       mandatory-to-implement secure transport is TLS <xref
       target="RFC8446"/>.</t>
 
-      <t>The NETCONF access control model <xref target="RFC6536"/> provides
+      <t>The NETCONF access control model <xref target="RFC8341"/> provides
       the means to restrict access for particular NETCONF or RESTCONF users to
       a preconfigured subset of all available NETCONF or RESTCONF protocol
       operations and content.</t>
@@ -627,10 +629,11 @@ module ietf-bfd-unsolicited {
 	    &RFC6020;
 	    &RFC6241;
 	    &RFC6242;
-	    &RFC6536;
 	    &RFC8040;
 	    &RFC8174;
 	    &RFC8340;
+	    &RFC8341;
+	    &RFC8349;
 	    &RFC8446;
 	    &RFC9127;
 	</references>
