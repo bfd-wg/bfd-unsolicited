@@ -12,21 +12,21 @@ module ietf-bfd-unsolicited {
   import ietf-bfd-types {
     prefix "bfd-types";
     reference 
-      "RFC 9127: YANG Data Model for Bidirectional Forwarding Detection
+      "RFC 9314: YANG Data Model for Bidirectional Forwarding Detection
       (BFD)";
   }
 
   import ietf-bfd {
     prefix "bfd";
     reference 
-      "RFC 9127: YANG Data Model for Bidirectional Forwarding Detection
+      "RFC 9314: YANG Data Model for Bidirectional Forwarding Detection
        (BFD)";
   }
 
   import ietf-bfd-ip-sh {
     prefix "bfd-ip-sh";
     reference
-      "RFC 9127: YANG Data Model for Bidirectional Forwarding Detection
+      "RFC 9314: YANG Data Model for Bidirectional Forwarding Detection
       (BFD)";
   }
 
@@ -67,7 +67,7 @@ module ietf-bfd-unsolicited {
 
   reference "RFC YYYY";
 
-  revision 2021-11-23 {
+  revision 2022-10-22 {
     description
       "Initial revision.";
     reference
@@ -96,7 +96,7 @@ module ietf-bfd-unsolicited {
   /*
    * Type Definitions
    */
-  typedef unsolicited-role {
+  typedef role {
     type enumeration {
       enum unsolicited-active {
         description "Active role";
@@ -105,7 +105,10 @@ module ietf-bfd-unsolicited {
         description "Passive role";
       }
     }
-    description "Unsolicited role";
+    description "Role";
+    reference 
+      "RFC5880: Bidirectional Forwarding Detection (BFD),
+       Section 6.1";
   }
 
   /*
@@ -154,15 +157,10 @@ module ietf-bfd-unsolicited {
         + "bfd-ip-sh:sessions/bfd-ip-sh:session" {
     description
       "Augmentation for BFD unsolicited on IP single-hop session";
-    container unsolicited {
-      config false;
-      description
-        "BFD IP single-hop session unsolicited top level container";
       leaf role {
-        type bfd-unsol:unsolicited-role;
+        config false;
+        type bfd-unsol:role;
         description "Role.";
       }
-    }
   }
 }
-
