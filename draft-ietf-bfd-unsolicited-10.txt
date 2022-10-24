@@ -542,8 +542,8 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 6.  Acknowledgments
 
    Authors would like to thank Acee Lindem, Greg Mirsky, Jeffrey Haas,
-   Raj Chetan, Tom Petch, Mahesh Jethanandani, Gyan Mishra and John
-   Scudder for their review and valuable input.
+   Raj Chetan, Tom Petch, Henning Rogge, Mahesh Jethanandani, Gyan
+   Mishra and John Scudder for their review and valuable input.
 
 7.  Security Considerations
 
