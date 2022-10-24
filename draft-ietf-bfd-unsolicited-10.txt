@@ -6,10 +6,10 @@ Network Working Group                                            E. Chen
 Internet-Draft                                        Palo Alto Networks
 Updates: 9314 (if approved)                                      N. Shen
 Intended status: Standards Track                                  Zededa
-Expires: 26 April 2023                                         R. Raszuk
+Expires: 27 April 2023                                         R. Raszuk
                                                                   Arrcus
                                                                R. Rahman
-                                                         23 October 2022
+                                                         24 October 2022
 
 
               Unsolicited BFD for Sessionless Applications
@@ -18,11 +18,11 @@ Expires: 26 April 2023                                         R. Raszuk
 Abstract
 
    For operational simplification of "sessionless" applications using
-   BFD, in this document we present procedures for "unsolicited BFD"
-   that allow a BFD session to be initiated by only one side, and
-   established without explicit per-session configuration or
-   registration by the other side (subject to certain per-interface or
-   per-router policies).
+   Bidirectional Forwarding Detection (BFD), in this document we present
+   procedures for "unsolicited BFD" that allow a BFD session to be
+   initiated by only one side, and established without explicit per-
+   session configuration or registration by the other side (subject to
+   certain per-interface or per-router policies).
 
    We also introduce a new YANG module to configure and manage
    "unsolicited BFD".  The YANG module in this document conforms to the
@@ -53,12 +53,12 @@ Status of This Memo
 
 
 
-Chen, et al.              Expires 26 April 2023                 [Page 1]
+Chen, et al.              Expires 27 April 2023                 [Page 1]
 
 Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
 
-   This Internet-Draft will expire on 26 April 2023.
+   This Internet-Draft will expire on 27 April 2023.
 
 Copyright Notice
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Chen, et al.              Expires 26 April 2023                 [Page 2]
+Chen, et al.              Expires 27 April 2023                 [Page 2]
 
 Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
@@ -165,7 +165,7 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
 
 
-Chen, et al.              Expires 26 April 2023                 [Page 3]
+Chen, et al.              Expires 27 April 2023                 [Page 3]
 
 Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
@@ -221,7 +221,7 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
 
 
-Chen, et al.              Expires 26 April 2023                 [Page 4]
+Chen, et al.              Expires 27 April 2023                 [Page 4]
 
 Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
@@ -277,7 +277,7 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
 
 
-Chen, et al.              Expires 26 April 2023                 [Page 5]
+Chen, et al.              Expires 27 April 2023                 [Page 5]
 
 Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
@@ -333,7 +333,7 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
 
 
-Chen, et al.              Expires 26 April 2023                 [Page 6]
+Chen, et al.              Expires 27 April 2023                 [Page 6]
 
 Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
@@ -389,7 +389,7 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
 
 
-Chen, et al.              Expires 26 April 2023                 [Page 7]
+Chen, et al.              Expires 27 April 2023                 [Page 7]
 
 Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
@@ -445,7 +445,7 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
 
 
-Chen, et al.              Expires 26 April 2023                 [Page 8]
+Chen, et al.              Expires 27 April 2023                 [Page 8]
 
 Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
@@ -501,7 +501,7 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
 
 
-Chen, et al.              Expires 26 April 2023                 [Page 9]
+Chen, et al.              Expires 27 April 2023                 [Page 9]
 
 Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
@@ -557,7 +557,7 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
 
 
-Chen, et al.              Expires 26 April 2023                [Page 10]
+Chen, et al.              Expires 27 April 2023                [Page 10]
 
 Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
@@ -613,7 +613,7 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
 
 
-Chen, et al.              Expires 26 April 2023                [Page 11]
+Chen, et al.              Expires 27 April 2023                [Page 11]
 
 Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
@@ -669,7 +669,7 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
 
 
-Chen, et al.              Expires 26 April 2023                [Page 12]
+Chen, et al.              Expires 27 April 2023                [Page 12]
 
 Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
@@ -725,7 +725,7 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
 
 
-Chen, et al.              Expires 26 April 2023                [Page 13]
+Chen, et al.              Expires 27 April 2023                [Page 13]
 
 Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
@@ -781,7 +781,7 @@ Authors' Addresses
 
 
 
-Chen, et al.              Expires 26 April 2023                [Page 14]
+Chen, et al.              Expires 27 April 2023                [Page 14]
 
 Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
@@ -837,4 +837,4 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
 
 
-Chen, et al.              Expires 26 April 2023                [Page 15]
+Chen, et al.              Expires 27 April 2023                [Page 15]
