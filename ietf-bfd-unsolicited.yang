@@ -158,8 +158,8 @@ module ietf-bfd-unsolicited {
     description
       "Augmentation for BFD unsolicited on IP single-hop session";
       leaf role {
-        config false;
         type bfd-unsol:role;
+        config false;
         description "Role.";
       }
   }
