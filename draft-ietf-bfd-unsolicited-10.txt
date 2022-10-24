@@ -4,12 +4,12 @@
 
 Network Working Group                                            E. Chen
 Internet-Draft                                        Palo Alto Networks
-Intended status: Standards Track                                 N. Shen
-Expires: 25 April 2023                                            Zededa
-                                                               R. Raszuk
+Updates: 9314 (if approved)                                      N. Shen
+Intended status: Standards Track                                  Zededa
+Expires: 26 April 2023                                         R. Raszuk
                                                                   Arrcus
                                                                R. Rahman
-                                                         22 October 2022
+                                                         23 October 2022
 
 
               Unsolicited BFD for Sessionless Applications
@@ -53,12 +53,12 @@ Status of This Memo
 
 
 
-Chen, et al.              Expires 25 April 2023                 [Page 1]
+Chen, et al.              Expires 26 April 2023                 [Page 1]
 
 Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
 
-   This Internet-Draft will expire on 25 April 2023.
+   This Internet-Draft will expire on 26 April 2023.
 
 Copyright Notice
 
@@ -77,19 +77,19 @@ Copyright Notice
 Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
-   2.  Procedures for Unsolicited BFD  . . . . . . . . . . . . . . .   3
-   3.  State Variables . . . . . . . . . . . . . . . . . . . . . . .   4
+   2.  Procedures for Unsolicited BFD  . . . . . . . . . . . . . . .   4
+   3.  State Variables . . . . . . . . . . . . . . . . . . . . . . .   5
    4.  YANG Data Model . . . . . . . . . . . . . . . . . . . . . . .   5
      4.1.  Unsolicited BFD Hierarchy . . . . . . . . . . . . . . . .   5
      4.2.  Unsolicited BFD Module  . . . . . . . . . . . . . . . . .   6
    5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  10
    6.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  10
    7.  Security Considerations . . . . . . . . . . . . . . . . . . .  10
-     7.1.  BFD Protocol Security Considerations  . . . . . . . . . .  11
+     7.1.  BFD Protocol Security Considerations  . . . . . . . . . .  10
      7.2.  YANG Module Security Considerations . . . . . . . . . . .  11
    8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  12
      8.1.  Normative References  . . . . . . . . . . . . . . . . . .  12
-     8.2.  Informative References  . . . . . . . . . . . . . . . . .  14
+     8.2.  Informative References  . . . . . . . . . . . . . . . . .  13
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  14
 
 1.  Introduction
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Chen, et al.              Expires 25 April 2023                 [Page 2]
+Chen, et al.              Expires 26 April 2023                 [Page 2]
 
 Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
@@ -137,10 +137,18 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
    without explicit per-session configuration or registration by the
    other side (subject to certain per-interface or per-router policies).
 
+   Unsolicited BFD impacts only the initiation of BFD sessions.  There
+   is no change to all the other procedures specified in [RFC5880] such
+   as, but not limited to, the Echo function and Demand mode.
+
    With "unsolicited BFD" there is potential risk for excessive resource
    usage by BFD from "unexpected" remote systems.  To mitigate such
    risks, several mechanisms are recommended in the Security
    Considerations section.
+
+   The procedure described in this document could be applied to BFD for
+   Multihop paths [RFC5883].  However, because of security risks, this
+   document applies only to BFD for single IP hops [RFC5881].
 
    Compared to the "Seamless BFD" [RFC7880], this proposal involves only
    minor procedural enhancements to the widely deployed BFD itself.
@@ -155,20 +163,18 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
    "unsolicited BFD" can be used in BGP route selection by these clients
    to eliminate paths with "inaccessible nexthops".
 
+
+
+Chen, et al.              Expires 26 April 2023                 [Page 3]
+
+Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
+
+
 2.  Procedures for Unsolicited BFD
 
    With "unsolicited BFD", one side takes the "Active role" and the
    other side takes only the "Passive role" as described in [RFC5880],
    section 6.1.
-
-
-
-
-
-Chen, et al.              Expires 25 April 2023                 [Page 3]
-
-Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
-
 
    Passive unsolicited BFD support MUST be disabled by default, and MUST
    require explicit configuration to be enabled.  On the passive side,
@@ -209,6 +215,17 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
    to the "Passive role" when there is no longer any locally registered
    client for the BFD session.
 
+
+
+
+
+
+
+Chen, et al.              Expires 26 April 2023                 [Page 4]
+
+Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
+
+
 3.  State Variables
 
    This document defines a new state variable called Role.
@@ -217,14 +234,6 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
    The role of the BFD session as per [RFC5880], section 6.1.  Possible
    values are Active or Passive.
-
-
-
-
-Chen, et al.              Expires 25 April 2023                 [Page 4]
-
-Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
-
 
 4.  YANG Data Model
 
@@ -268,16 +277,7 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
 
 
-
-
-
-
-
-
-
-
-
-Chen, et al.              Expires 25 April 2023                 [Page 5]
+Chen, et al.              Expires 26 April 2023                 [Page 5]
 
 Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
@@ -333,7 +333,7 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
 
 
-Chen, et al.              Expires 25 April 2023                 [Page 6]
+Chen, et al.              Expires 26 April 2023                 [Page 6]
 
 Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
@@ -389,7 +389,7 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
 
 
-Chen, et al.              Expires 25 April 2023                 [Page 7]
+Chen, et al.              Expires 26 April 2023                 [Page 7]
 
 Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
@@ -445,7 +445,7 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
 
 
-Chen, et al.              Expires 25 April 2023                 [Page 8]
+Chen, et al.              Expires 26 April 2023                 [Page 8]
 
 Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
@@ -501,7 +501,7 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
 
 
-Chen, et al.              Expires 25 April 2023                 [Page 9]
+Chen, et al.              Expires 26 April 2023                 [Page 9]
 
 Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
@@ -513,7 +513,6 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
            type bfd-unsol:role;
            description "Role.";
          }
-       }
      }
    }
    <CODE ENDS>
@@ -548,20 +547,6 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
 7.  Security Considerations
 
-
-
-
-
-
-
-
-
-
-Chen, et al.              Expires 25 April 2023                [Page 10]
-
-Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
-
-
 7.1.  BFD Protocol Security Considerations
 
    The same security considerations and protection measures as those
@@ -569,6 +554,13 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
    addition, with "unsolicited BFD" there is potential risk for
    excessive resource usage by BFD from "unexpected" remote systems.  To
    mitigate such risks, the following measures are mandatory:
+
+
+
+Chen, et al.              Expires 26 April 2023                [Page 10]
+
+Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
+
 
    *  Limit the feature to specific interfaces, and to single-hop BFD
       with "TTL=255" [RFC5082].
@@ -611,18 +603,20 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
    /routing/control-plane-protocols/control-plane-protocol/bfd/ip-sh
    /unsolicited:
 
-
-
-Chen, et al.              Expires 25 April 2023                [Page 11]
-
-Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
-
-
    *  data node "enabled" enables creation of unsolicited BFD IP single-
       hop sessions globally, i.e. on all interfaces.  See Section 7.1.
    *  data nodes local-multiplier, desired-min-tx-interval, required-
       min-rx-interval and min-interval all impact the parameters of the
       unsolicited BFD IP single-hop sessions.
+
+
+
+
+
+Chen, et al.              Expires 26 April 2023                [Page 11]
+
+Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
+
 
    /routing/control-plane-protocols/control-plane-protocol/bfd/ip-sh
    /interfaces/interface/unsolicited:
@@ -665,19 +659,20 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
               (BFD)", RFC 5880, DOI 10.17487/RFC5880, June 2010,
               <https://www.rfc-editor.org/info/rfc5880>.
 
-
-
-
-
-Chen, et al.              Expires 25 April 2023                [Page 12]
-
-Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
-
-
    [RFC5881]  Katz, D. and D. Ward, "Bidirectional Forwarding Detection
               (BFD) for IPv4 and IPv6 (Single Hop)", RFC 5881,
               DOI 10.17487/RFC5881, June 2010,
               <https://www.rfc-editor.org/info/rfc5881>.
+
+
+
+
+
+
+Chen, et al.              Expires 26 April 2023                [Page 12]
+
+Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
+
 
    [RFC6020]  Bjorklund, M., Ed., "YANG - A Data Modeling Language for
               the Network Configuration Protocol (NETCONF)", RFC 6020,
@@ -719,17 +714,6 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
               Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
               <https://www.rfc-editor.org/info/rfc8446>.
 
-
-
-
-
-
-
-Chen, et al.              Expires 25 April 2023                [Page 13]
-
-Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
-
-
    [RFC9314]  Jethanandani, M., Ed., Rahman, R., Ed., Zheng, L., Ed.,
               Pallagatti, S., and G. Mirsky, "YANG Data Model for
               Bidirectional Forwarding Detection (BFD)", RFC 9314,
@@ -737,6 +721,14 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
               <https://www.rfc-editor.org/info/rfc9314>.
 
 8.2.  Informative References
+
+
+
+
+Chen, et al.              Expires 26 April 2023                [Page 13]
+
+Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
+
 
    [I-D.ietf-idr-rs-bfd]
               Bush, R., Haas, J., John Scudder, G., Nipper, A., and C.
@@ -750,6 +742,10 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
               Border Gateway Protocol 4 (BGP-4)", RFC 4271,
               DOI 10.17487/RFC4271, January 2006,
               <https://www.rfc-editor.org/info/rfc4271>.
+
+   [RFC5883]  Katz, D. and D. Ward, "Bidirectional Forwarding Detection
+              (BFD) for Multihop Paths", RFC 5883, DOI 10.17487/RFC5883,
+              June 2010, <https://www.rfc-editor.org/info/rfc5883>.
 
    [RFC7880]  Pignataro, C., Ward, D., Akiya, N., Bhatia, M., and S.
               Pallagatti, "Seamless Bidirectional Forwarding Detection
@@ -778,17 +774,16 @@ Authors' Addresses
    Email: enchen@paloaltonetworks.com
 
 
-
-
-
-Chen, et al.              Expires 25 April 2023                [Page 14]
-
-Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
-
-
    Naiming Shen
    Zededa
    Email: naiming@zededa.com
+
+
+
+
+Chen, et al.              Expires 26 April 2023                [Page 14]
+
+Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
 
    Robert Raszuk
@@ -837,4 +832,9 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
 
 
-Chen, et al.              Expires 25 April 2023                [Page 15]
+
+
+
+
+
+Chen, et al.              Expires 26 April 2023                [Page 15]
