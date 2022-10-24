@@ -9,6 +9,7 @@ Intended status: Standards Track                                  Zededa
 Expires: 27 April 2023                                         R. Raszuk
                                                                   Arrcus
                                                                R. Rahman
+                                                               Graphiant
                                                          24 October 2022
 
 
@@ -22,11 +23,12 @@ Abstract
    procedures for "unsolicited BFD" that allow a BFD session to be
    initiated by only one side, and established without explicit per-
    session configuration or registration by the other side (subject to
-   certain per-interface or per-router policies).
+   certain per-interface or global policies).
 
    We also introduce a new YANG module to configure and manage
-   "unsolicited BFD".  The YANG module in this document conforms to the
-   Network Management Datastore Architecture (NMDA) [RFC8342].
+   "unsolicited BFD".  The YANG module in this document is based on YANG
+   1.1 as defined in RFC 7950 and conforms to the Network Management
+   Datastore Architecture (NMDA) as described in RFC 8342.
 
 Requirements Language
 
@@ -46,10 +48,8 @@ Status of This Memo
    working documents as Internet-Drafts.  The list of current Internet-
    Drafts is at https://datatracker.ietf.org/drafts/current/.
 
-   Internet-Drafts are draft documents valid for a maximum of six months
-   and may be updated, replaced, or obsoleted by other documents at any
-   time.  It is inappropriate to use Internet-Drafts as reference
-   material or to cite them other than as "work in progress."
+
+
 
 
 
@@ -57,6 +57,11 @@ Chen, et al.              Expires 27 April 2023                 [Page 1]
 
 Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
 
    This Internet-Draft will expire on 27 April 2023.
 
@@ -101,11 +106,6 @@ Table of Contents
    involves both sides for its establishment.  However, this requirement
    can be operationally challenging when the prerequisite "session" does
    not naturally exist between two endpoints in an application.
-   Simultaneous configuration and coordination may be required on both
-   sides for BFD to take effect.  For example:
-
-
-
 
 
 
@@ -113,6 +113,9 @@ Chen, et al.              Expires 27 April 2023                 [Page 2]
 
 Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
+
+   Simultaneous configuration and coordination may be required on both
+   sides for BFD to take effect.  For example:
 
    *  When BFD is used to keep track of the "liveness" of the nexthop of
       static routes.  Although only one side may need the BFD
@@ -135,7 +138,7 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
    In this document we present procedures for "unsolicited BFD" that
    allow a BFD session to be initiated by only one side, and established
    without explicit per-session configuration or registration by the
-   other side (subject to certain per-interface or per-router policies).
+   other side (subject to certain per-interface or global policies).
 
    Unsolicited BFD impacts only the initiation of BFD sessions.  There
    is no change to all the other procedures specified in [RFC5880] such
@@ -157,11 +160,8 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
    the exchange of BFD discriminators over an out-of-band channel before
    BFD session bring-up.
 
-   When BGP Add-Path [RFC7911] is deployed at an IXP using a Route
-   Server, multiple BGP paths (when they exist) can be made available to
-   the clients of the Router Server as described in [RFC7947].  The
-   "unsolicited BFD" can be used in BGP route selection by these clients
-   to eliminate paths with "inaccessible nexthops".
+
+
 
 
 
@@ -169,6 +169,12 @@ Chen, et al.              Expires 27 April 2023                 [Page 3]
 
 Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
+
+   When BGP Add-Path [RFC7911] is deployed at an IXP using a Route
+   Server, multiple BGP paths (when they exist) can be made available to
+   the clients of the Router Server as described in [RFC7947].  The
+   "unsolicited BFD" can be used in BGP route selection by these clients
+   to eliminate paths with "inaccessible nexthops".
 
 2.  Procedures for Unsolicited BFD
 
@@ -184,7 +190,9 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
    chosen to allow multiple unsolicited BFD sessions.
 
    The active side starts sending the BFD Control packets as specified
-   in [RFC5880].  The passive side does not send BFD Control packets.
+   in [RFC5880].  The passive side does not send BFD Control packets
+   initially, it sends BFD Control packets only after it has received
+   BFD Control packets from the active side.
 
    When the passive side receives a BFD Control packet from the active
    side with 0 as "Your Discriminator" and does not find an existing BFD
@@ -197,25 +205,17 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
    source address of the BFD Control packet SHOULD be validated against
    expected routing protocol peer addresses on that interface.
 
-   It would then start sending the BFD Control packets and perform
-   necessary procedure for bringing up, maintaining and tearing down the
-   BFD session.  If the BFD session fails to get established within
-   certain specified time, or if an established BFD session goes down,
-   the passive side would stop sending BFD Control packets and MAY
-   delete the BFD session created until BFD Control packets are
-   initiated by the active side again.
+   The passive side MUST then start sending BFD Control packets and
+   perform the necessary procedure for bringing up, maintaining and
+   tearing down the BFD session.  If the BFD session fails to get
+   established within certain specified time, or if an established BFD
+   session goes down, the passive side SHOULD stop sending BFD Control
+   packets and MAY delete the BFD session created until BFD Control
+   packets are initiated by the active side again.
 
    When an Unsolicited BFD session goes down, an implementation MAY
-   retain the session state for a period of time, which may be
-   configurable.  Retaining this state can be useful for operational
-   purposes.
-
-   The "Passive role" may change to the "Active role" when a local
-   client registers for the same BFD session, and from the "Active role"
-   to the "Passive role" when there is no longer any locally registered
-   client for the BFD session.
-
-
+   retain the session state for a period of time.  Retaining this state
+   can be useful for operational purposes.
 
 
 
@@ -225,6 +225,11 @@ Chen, et al.              Expires 27 April 2023                 [Page 4]
 
 Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
+
+   The "Passive role" may change to the "Active role" when a local
+   client registers for the same BFD session, and from the "Active role"
+   to the "Passive role" when there is no longer any locally registered
+   client for the BFD session.
 
 3.  State Variables
 
@@ -238,8 +243,8 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 4.  YANG Data Model
 
    This section extends the YANG data model for BFD [RFC9314] to cover
-   unsolicited BFD.  We import [RFC8349] since the "bfd" container in
-   [RFC9314] is under "control-plane-protocol".
+   unsolicited BFD.  The new module imports [RFC8349] since the "bfd"
+   container in [RFC9314] is under "control-plane-protocol".
 
 4.1.  Unsolicited BFD Hierarchy
 
@@ -256,11 +261,6 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
    The tree diagram below uses the graphical representation of data
    models, as defined in [RFC8340].
-
-
-
-
-
 
 
 
@@ -316,7 +316,7 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 4.2.  Unsolicited BFD Module
 
 
-   <CODE BEGINS> file "ietf-bfd-unsolicited@2022-10-22.yang"
+   <CODE BEGINS> file "ietf-bfd-unsolicited@2022-10-24.yang"
    module ietf-bfd-unsolicited {
 
      yang-version 1.1;
@@ -402,7 +402,7 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
      reference "RFC YYYY";
 
-     revision 2022-10-22 {
+     revision 2022-10-24 {
        description
          "Initial revision.";
        reference
@@ -433,10 +433,10 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
       */
      typedef role {
        type enumeration {
-         enum unsolicited-active {
+         enum active {
            description "Active role";
          }
-         enum unsolicited-passive {
+         enum passive {
            description "Passive role";
          }
        }
@@ -795,9 +795,9 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat    October 2022
 
 
    Reshad Rahman
+   Graphiant
    Canada
    Email: reshad@yahoo.com
-
 
 
 

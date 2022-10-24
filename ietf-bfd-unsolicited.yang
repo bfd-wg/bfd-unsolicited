@@ -67,7 +67,7 @@ module ietf-bfd-unsolicited {
 
   reference "RFC YYYY";
 
-  revision 2022-10-22 {
+  revision 2022-10-24 {
     description
       "Initial revision.";
     reference
@@ -98,10 +98,10 @@ module ietf-bfd-unsolicited {
    */
   typedef role {
     type enumeration {
-      enum unsolicited-active {
+      enum active {
         description "Active role";
       }
-      enum unsolicited-passive {
+      enum passive {
         description "Passive role";
       }
     }

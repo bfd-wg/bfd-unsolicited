@@ -75,7 +75,7 @@
     </address>
 	</author>
 	<author fullname="Reshad Rahman" initials="R." surname="Rahman">
-	    <organization></organization>
+	    <organization>Graphiant</organization>
 	    <address>
 		<postal>
 		<street></street>
@@ -96,12 +96,13 @@
 	    for "unsolicited BFD" that allow a BFD session to be initiated
 	    by only one side, and established without explicit per-session
 	    configuration or registration by the other side (subject to certain
-	    per-interface or per-router policies). 
+	    per-interface or global policies).
             </t>
             <t>
             We also introduce a new YANG module
             to configure and manage "unsolicited BFD". The YANG module in this document
-            conforms to the Network Management Datastore Architecture (NMDA) <xref target="RFC8342"/>.
+            is based on YANG 1.1 as defined in RFC 7950 and conforms to the Network Management 
+            Datastore Architecture (NMDA) as described in RFC 8342.
 	    </t>
 	</abstract>
 
@@ -168,7 +169,7 @@
 	    for "unsolicited BFD" that allow a BFD session to be initiated
 	    by only one side, and established without explicit per-session
 	    configuration or registration by the other side (subject to certain
-	    per-interface or per-router policies).
+	    per-interface or global policies).
 	    </t>
         <t>Unsolicited BFD impacts only the initiation of BFD sessions. There is no change to all the other procedures specified in
           <xref target="RFC5880"/> such as, but not limited to, the Echo function and Demand mode.</t>
@@ -219,7 +220,8 @@
 
 	     <t>
 	       The active side starts sending the BFD Control packets as specified in 
-         <xref target="RFC5880"/>. The passive side does not send BFD Control packets.
+         <xref target="RFC5880"/>. The passive side does not send BFD Control packets initially, 
+         it sends BFD Control packets only after it has received BFD Control packets from the active side.
 	     </t>
 
 	     <t>
@@ -234,17 +236,17 @@
              the BFD Control packet SHOULD be validated against expected routing protocol peer addresses on that interface.</t>
 
          <t>
-         It would then start sending the BFD Control packets and perform necessary 
+         The passive side MUST then start sending BFD Control packets and perform the necessary 
          procedure for bringing up, maintaining and tearing down the BFD session. 
          If the BFD session fails to get established within certain specified time, 
-         or if an established BFD session goes down, the passive side would stop 
+         or if an established BFD session goes down, the passive side SHOULD stop 
          sending BFD Control packets and MAY delete the BFD session created until 
          BFD Control packets are initiated by the active side again.
 	       </t>
 
         <t>
          When an Unsolicited BFD session goes down, an implementation MAY retain 
-         the session state for a period of time, which may be configurable.
+         the session state for a period of time.
          Retaining this state can be useful for operational purposes.
         </t>
 
@@ -274,7 +276,7 @@
 	<section title="YANG Data Model">
 	    <t>
             This section extends the YANG data model for BFD <xref target="RFC9314"/>
-	    to cover unsolicited BFD. We import <xref target="RFC8349"/> since the "bfd"
+	    to cover unsolicited BFD. The new module imports <xref target="RFC8349"/> since the "bfd"
             container in <xref target="RFC9314"/> is under "control-plane-protocol".
 	    </t>
             
@@ -330,7 +332,7 @@ module: ietf-bfd-unsolicited
 	  <preamble/>
 
           <artwork align="left"><![CDATA[
-<CODE BEGINS> file "ietf-bfd-unsolicited@2022-10-22.yang"
+<CODE BEGINS> file "ietf-bfd-unsolicited@2022-10-24.yang"
 module ietf-bfd-unsolicited {
 
   yang-version 1.1;
@@ -400,7 +402,7 @@ module ietf-bfd-unsolicited {
 
   reference "RFC YYYY";
 
-  revision 2022-10-22 {
+  revision 2022-10-24 {
     description
       "Initial revision.";
     reference
@@ -431,10 +433,10 @@ module ietf-bfd-unsolicited {
    */
   typedef role {
     type enumeration {
-      enum unsolicited-active {
+      enum active {
         description "Active role";
       }
-      enum unsolicited-passive {
+      enum passive {
         description "Passive role";
       }
     }
