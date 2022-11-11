@@ -23,7 +23,6 @@
 <!ENTITY RFC9314 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9314.xml">
 
 <!-- <!ENTITY RFC8174 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.9314.xml"> -->
-<!ENTITY I-D.ietf-idr-rs-bfd SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-idr-rs-bfd.xml">
 ]>
 <?rfc comments="yes"?>
 <?rfc compact="yes"?>
@@ -152,8 +151,7 @@
              third-party nexthop is different from the peering address of
              the Route Server, for BFD to work, currently two routers peering
              with the Route Server need to have routes and nexthops from each
-             other (although indirectly via the Route Server). These
-             issues are also discussed in <xref target="I-D.ietf-idr-rs-bfd"/>.
+             other (although indirectly via the Route Server).
 	        </t>
 		</list>
 	    </t>
@@ -249,13 +247,6 @@
          the session state for a period of time.
          Retaining this state can be useful for operational purposes.
         </t>
-
-	     <t>
-	       The "Passive role" may change to the "Active role" when a local client
-	       registers for the same BFD session, and from the "Active role" to
-	       the "Passive role" when there is no longer any locally registered
-	       client for the BFD session.
-	     </t>
 	</section>
 
   <section title="State Variables">
@@ -267,7 +258,7 @@
       bfd.Role
     </t>
     <t>
-      The role of the BFD session as per <xref target="RFC5880"/>, section 6.1. 
+      The role of the local system during BFD session initialization, as per <xref target="RFC5880"/>, section 6.1.
       Possible values are Active or Passive. 
     </t>
 
@@ -334,7 +325,7 @@ module: ietf-bfd-unsolicited
 	  <preamble/>
 
           <artwork align="left"><![CDATA[
-<CODE BEGINS> file "ietf-bfd-unsolicited@2022-10-24.yang"
+<CODE BEGINS> file "ietf-bfd-unsolicited@2022-11-11.yang"
 module ietf-bfd-unsolicited {
 
   yang-version 1.1;
@@ -404,7 +395,7 @@ module ietf-bfd-unsolicited {
 
   reference "RFC YYYY";
 
-  revision 2022-10-24 {
+  revision 2022-11-11 {
     description
       "Initial revision.";
     reference
@@ -442,7 +433,8 @@ module ietf-bfd-unsolicited {
         description "Passive role";
       }
     }
-    description "Role";
+    description
+      "System role during BFD session initialization.";
     reference 
       "RFC5880: Bidirectional Forwarding Detection (BFD),
        Section 6.1";
@@ -497,7 +489,8 @@ module ietf-bfd-unsolicited {
       leaf role {
         type bfd-unsol:role;
         config false;
-        description "Role.";
+        description
+          "Role of local system during BFD session initialization.";
       }
   }
 }
@@ -528,8 +521,8 @@ module ietf-bfd-unsolicited {
 	<section title="Acknowledgments"> 
 
 	<t>Authors would like to thank Acee Lindem, Greg Mirsky, Jeffrey Haas, 
-      Raj Chetan, Tom Petch, Henning Rogge, Mahesh Jethanandani, Gyan Mishra and John Scudder
-      for their review and valuable input.</t> 
+      Raj Chetan, Tom Petch, Henning Rogge, Mahesh Jethanandani, Gyan Mishra, John Scudder
+      and Dan Romascanu for their review and valuable input.</t>
 
 	</section> 
 
@@ -649,7 +642,6 @@ module ietf-bfd-unsolicited {
 	    &RFC7911;
 	    &RFC7947;
 	    &RFC8342;
-	    &I-D.ietf-idr-rs-bfd;
 	</references>
     </back>
 </rfc>
