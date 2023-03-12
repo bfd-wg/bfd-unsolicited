@@ -1,0 +1,48 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+<interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+  <interface>
+    <name>eth0</name>
+    <type
+        xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
+  </interface>
+  <interface>
+    <name>eth1</name>
+    <type
+        xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
+  </interface>
+</interfaces>
+<routing xmlns="urn:ietf:params:xml:ns:yang:ietf-routing">
+  <control-plane-protocols>
+    <control-plane-protocol>
+      <type
+          xmlns:bfd-types="urn:ietf:params:xml:ns:yang:ietf-bfd-types">bfd-types:bfdv1</type>
+      <name>name:BFDxxx</name>
+      <bfd xmlns="urn:ietf:params:xml:ns:yang:ietf-bfd">
+        <ip-sh xmlns="urn:ietf:params:xml:ns:yang:ietf-bfd-ip-sh">
+          <unsolicited>
+            <enabled>true</enabled>
+            <local-multiplier>2</local-multiplier>
+            <min-interval>50000</min-interval>
+          </unsolicited>
+          <interfaces>
+              <interface>eth0</interface>
+              <unsolicited>
+                <enabled>true</enabled>
+                <local-multiplier>3</local-multiplier>
+                <min-interval>250000</min-interval>
+              </unsolicited>
+          </interfaces>
+          <interfaces>
+              <interface>eth1</interface>
+              <unsolicited>
+                <enabled>true</enabled>
+              </unsolicited>
+          </interfaces>
+        </ip-sh>
+      </bfd>
+    </control-plane-protocol>
+  </control-plane-protocols>
+</routing>
+</config>
