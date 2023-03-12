@@ -13,12 +13,12 @@ module: ietf-bfd-unsolicited
   augment /rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/bfd:bfd/bfd-ip-sh:ip-sh/bfd-ip-sh:interfaces:
     +--rw unsolicited {bfd-unsol:unsolicited-params-per-interface}?
        +--rw enabled?                          boolean
-       +--rw local-multiplier?                 multiplier
+       +--rw local-multiplier?                 bfd-types:multiplier
        +--rw (interval-config-type)?
           +--:(tx-rx-intervals)
           |  +--rw desired-min-tx-interval?    uint32
           |  +--rw required-min-rx-interval?   uint32
-          +--:(single-interval) {single-minimum-interval}?
+          +--:(single-interval) {bfd-types:single-minimum-interval}?
              +--rw min-interval?               uint32
   augment /rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/bfd:bfd/bfd-ip-sh:ip-sh/bfd-ip-sh:sessions/bfd-ip-sh:session:
     +--ro role?   bfd-unsol:role
