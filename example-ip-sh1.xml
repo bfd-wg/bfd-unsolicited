@@ -18,7 +18,7 @@
     <control-plane-protocol>
       <type
           xmlns:bfd-types="urn:ietf:params:xml:ns:yang:ietf-bfd-types">bfd-types:bfdv1</type>
-      <name>name:BFDxxx</name>
+      <name>name:BFD</name>
       <bfd xmlns="urn:ietf:params:xml:ns:yang:ietf-bfd">
         <ip-sh xmlns="urn:ietf:params:xml:ns:yang:ietf-bfd-ip-sh">
           <unsolicited>
