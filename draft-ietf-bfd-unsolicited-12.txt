@@ -286,30 +286,35 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat      March 2023
    models, as defined in [RFC8340].
 
 
-module: ietf-bfd-unsolicited
+   module: ietf-bfd-unsolicited
 
-  augment /rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/bfd:bfd/bfd-ip-sh:ip-sh:
-    +--rw unsolicited {bfd-unsol:unsolicited-params-global}?
-       +--rw enabled?                          boolean
-       +--rw local-multiplier?                 multiplier
-       +--rw (interval-config-type)?
-          +--:(tx-rx-intervals)
-          |  +--rw desired-min-tx-interval?    uint32
-          |  +--rw required-min-rx-interval?   uint32
-          +--:(single-interval) {single-minimum-interval}?
-             +--rw min-interval?               uint32
-  augment /rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/bfd:bfd/bfd-ip-sh:ip-sh/bfd-ip-sh:interfaces:
-    +--rw unsolicited {bfd-unsol:unsolicited-params-per-interface}?
-       +--rw enabled?                          boolean
-       +--rw local-multiplier?                 bfd-types:multiplier
-       +--rw (interval-config-type)?
-          +--:(tx-rx-intervals)
-          |  +--rw desired-min-tx-interval?    uint32
-          |  +--rw required-min-rx-interval?   uint32
-          +--:(single-interval) {bfd-types:single-minimum-interval}?
-             +--rw min-interval?               uint32
-  augment /rt:routing/rt:control-plane-protocols/rt:control-plane-protocol/bfd:bfd/bfd-ip-sh:ip-sh/bfd-ip-sh:sessions/bfd-ip-sh:session:
-    +--ro role?   bfd-unsol:role
+     augment /rt:routing/rt:control-plane-protocols
+             /rt:control-plane-protocol/bfd:bfd/bfd-ip-sh:ip-sh:
+       +--rw unsolicited {bfd-unsol:unsolicited-params-global}?
+          +--rw enabled?                          boolean
+          +--rw local-multiplier?                 multiplier
+          +--rw (interval-config-type)?
+             +--:(tx-rx-intervals)
+             |  +--rw desired-min-tx-interval?    uint32
+             |  +--rw required-min-rx-interval?   uint32
+             +--:(single-interval) {single-minimum-interval}?
+                +--rw min-interval?               uint32
+     augment /rt:routing/rt:control-plane-protocols
+             /rt:control-plane-protocol/bfd:bfd/bfd-ip-sh:ip-sh
+             /bfd-ip-sh:interfaces:
+       +--rw unsolicited {bfd-unsol:unsolicited-params-per-interface}?
+          +--rw enabled?                          boolean
+          +--rw local-multiplier?                 bfd-types:multiplier
+          +--rw (interval-config-type)?
+             +--:(tx-rx-intervals)
+             |  +--rw desired-min-tx-interval?    uint32
+             |  +--rw required-min-rx-interval?   uint32
+             +--:(single-interval) {bfd-types:single-minimum-interval}?
+                +--rw min-interval?               uint32
+     augment /rt:routing/rt:control-plane-protocols
+             /rt:control-plane-protocol/bfd:bfd/bfd-ip-sh:ip-sh
+             /bfd-ip-sh:sessions/bfd-ip-sh:session:
+       +--ro role?   bfd-unsol:role
 
 
 4.2.  Unsolicited BFD Module
@@ -325,11 +330,6 @@ module: ietf-bfd-unsolicited
      prefix "bfd-unsol";
 
      // RFC Ed.: replace occurences of YYYY with actual RFC numbers
-     // and remove this note
-
-     import ietf-bfd-types {
-       prefix "bfd-types";
-       reference
 
 
 
@@ -338,6 +338,11 @@ Chen, et al.            Expires 13 September 2023               [Page 6]
 Internet-Draft  Unsolicited BFD for Sessionless Applicat      March 2023
 
 
+     // and remove this note
+
+     import ietf-bfd-types {
+       prefix "bfd-types";
+       reference
          "RFC 9314: YANG Data Model for Bidirectional Forwarding
           Detection (BFD)";
      }
@@ -381,11 +386,6 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat      March 2023
         Copyright (c) 2023 IETF Trust and the persons
         identified as authors of the code.  All rights reserved.
 
-        Redistribution and use in source and binary forms, with or
-        without modification, is permitted pursuant to, and subject
-        to the license terms contained in, the Simplified BSD License
-        set forth in Section 4.c of the IETF Trust's Legal Provisions
-        Relating to IETF Documents
 
 
 
@@ -394,6 +394,11 @@ Chen, et al.            Expires 13 September 2023               [Page 7]
 Internet-Draft  Unsolicited BFD for Sessionless Applicat      March 2023
 
 
+        Redistribution and use in source and binary forms, with or
+        without modification, is permitted pursuant to, and subject
+        to the license terms contained in, the Simplified BSD License
+        set forth in Section 4.c of the IETF Trust's Legal Provisions
+        Relating to IETF Documents
         (http://trustee.ietf.org/license-info).
 
         This version of this YANG module is part of RFC YYYY; see
@@ -437,11 +442,6 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat      March 2023
          }
          enum passive {
            description "Passive role";
-         }
-       }
-       description
-         "Role of local system during BFD session initialization.";
-       reference
 
 
 
@@ -450,6 +450,11 @@ Chen, et al.            Expires 13 September 2023               [Page 8]
 Internet-Draft  Unsolicited BFD for Sessionless Applicat      March 2023
 
 
+         }
+       }
+       description
+         "Role of local system during BFD session initialization.";
+       reference
          "RFC5880: Bidirectional Forwarding Detection (BFD),
           Section 6.1";
      }
@@ -493,11 +498,6 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat      March 2023
           }
           /*
            * The following is the same as bfd-types:base-cfg-parms, but
-           * without default values (for inheritance)
-           */
-          leaf local-multiplier {
-            type bfd-types:multiplier;
-            description
 
 
 
@@ -506,6 +506,11 @@ Chen, et al.            Expires 13 September 2023               [Page 9]
 Internet-Draft  Unsolicited BFD for Sessionless Applicat      March 2023
 
 
+           * without default values (for inheritance)
+           */
+          leaf local-multiplier {
+            type bfd-types:multiplier;
+            description
               "Multiplier transmitted by the local system. Defaults to
                ../../unsolicited/local-multiplier.";
           }
@@ -549,11 +554,6 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat      March 2023
                 (../../unsolicited/desired-min-tx-interval and
                  ../../unsolicited/required-min-rx-interval)" {
             error-message
-              "The interval(s) must be specified either under the interface
-               or globally.";
-          }
-        }
-      }
 
 
 
@@ -561,6 +561,12 @@ Chen, et al.            Expires 13 September 2023              [Page 10]
 
 Internet-Draft  Unsolicited BFD for Sessionless Applicat      March 2023
 
+
+              "The interval(s) must be specified either under the interface
+               or globally.";
+          }
+        }
+      }
 
      augment "/rt:routing/rt:control-plane-protocols/"
            + "rt:control-plane-protocol/bfd:bfd/bfd-ip-sh:ip-sh/"
@@ -588,12 +594,6 @@ Internet-Draft  Unsolicited BFD for Sessionless Applicat      March 2023
    *  BFD IP single-hop unsolicited is enabled on interface eth1.  Since
       there is no parameter configuration for eth1, it inherits from the
       global configuration.
-
-
-
-
-
-
 
 
 
