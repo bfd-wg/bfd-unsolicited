@@ -36,7 +36,7 @@
 <?rfc tocompact="yes"?>
 
 
-<rfc category="std" ipr="trust200902" docName="draft-ietf-bfd-unsolicited-13" updates="9314" submissionType="IETF">
+<rfc category="std" ipr="trust200902" docName="draft-ietf-bfd-unsolicited-13" submissionType="IETF">
     <front>
 	<title>Unsolicited BFD for Sessionless Applications</title>
 
@@ -101,7 +101,7 @@
             We also introduce a new YANG module
             to configure and manage "unsolicited BFD". The YANG module in this document
             is based on YANG 1.1 as defined in RFC 7950 and conforms to the Network Management 
-            Datastore Architecture (NMDA) as described in RFC 8342. This document updates RFC 9314.
+            Datastore Architecture (NMDA) as described in RFC 8342. This document augments RFC 9314.
 	    </t>
 	</abstract>
 
@@ -195,8 +195,9 @@
 	    When BGP Add-Path <xref target="RFC7911"/> is deployed at an IXP using a Route Server,
 	    multiple BGP paths (when they exist) can be made available to the clients of the
 	    Route Server as described in <xref target="RFC7947"/>.
-	    The "unsolicited BFD" can be used in BGP route selection
-	    by these clients to eliminate paths with "inaccessible nexthops".
+	    Unsolicited BFD can be used by BGP route selection's Route Resolvability Condition 
+	    <xref target="RFC4271" section="9.1.2.1"/> to exclude routes where the NEXT_HOP is not
+	    reachable using the procedures specified in this document.
 	    </t>
         </section>
 
