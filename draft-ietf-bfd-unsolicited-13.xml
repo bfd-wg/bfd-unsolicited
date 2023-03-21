@@ -230,8 +230,8 @@
 	     <t>
 	       When the passive side receives a BFD Control packet from the active side 
          with 0 as "Your Discriminator" and does not find an existing BFD session, 
-         the passive side MAY create a matching BFD session toward the active side, 
-         if permitted by local configuration and policy.</t>
+         the passive side SHOULD create a matching BFD session toward the active side, 
+         unless not permitted by local configuration or policy.</t>
              <t>
              When the passive side receives an incoming BFD Control packet on a numbered interfaces 
              the source address of that packet MUST belong to the subnet of the interface on which the BFD 
