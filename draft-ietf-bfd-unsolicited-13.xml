@@ -185,7 +185,7 @@
 	    <t>
 	    Compared to the "Seamless BFD" <xref target="RFC7880"/>, this proposal involves
 	    only minor procedural enhancements to the widely deployed BFD itself.
-	    Thus we believe that this proposal is inherently simpler in the
+	    Thus, we believe that this proposal is inherently simpler in the
 	    protocol itself and deployment.
 	    As an example, it does not require the exchange of BFD
 	    discriminators over an out-of-band channel before BFD session bring-up.
@@ -687,7 +687,7 @@ module ietf-bfd-unsolicited {
      In some environments, such as an Internet Exchange Points (IXPs), BFD authentication cannot be used because of the lack of coordination for the operation of the two endpoints of the BFD session.
      </t>
      <t>
-     In other environments, such as when BFD is used to track the next hop of static routes, it is possible to use BFD authentication. This comes with the extra cost of configuring matching key-chains between the two endpoints.
+     In other environments, such as when BFD is used to track the next hop of static routes, it is possible to use BFD authentication. This comes with the extra cost of configuring matching keychains between the two endpoints.
      </t>
 	   </section>
 	   <section title="YANG Module Security Considerations">
