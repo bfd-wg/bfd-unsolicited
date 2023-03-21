@@ -664,21 +664,31 @@ module ietf-bfd-unsolicited {
 	   <t>
      <list style="symbols">
 	   <t>
-     Limit the feature to specific interfaces, and to single-hop BFD with "TTL=255" 
-     <xref target="RFC5082"/>.
+     Limit the feature to specific interfaces, and to single-hop BFD sessions using the procedures from
+     <xref target="RFC5082"/>.  See <xref target="RFC5881" section="5"/> for the details of these procedures.
      </t>
      <t>
-     Apply "policy" to process BFD packets only from certain subnets or hosts.
+     Apply policy to process BFD packets only from certain subnets or hosts.
       </t>
 	    <t>
      Deploy the feature only in certain "trustworthy" environment, e.g., at an IXP, 
      or between a provider and its customers.
 	   </t>
-	   <t>
-     Use BFD authentication, see <xref target="RFC5880"/>. In some environments, e.g. when using an IXP, BFD authentication can not be used because of the lack of coordination into the operation of the two endpoints of the BFD session.  In other environments, e.g. when BFD is used to track the next hop of static routes, it is possible to use BFD authentication: this comes with the extra cost of configuring matching key-chains at the two endpoints. If BFD authentication is used, the Meticulous Keyed SHA1 mechanism SHOULD be used. 
-     </t>
 	   </list>
 	    </t>
+     </section>
+     <section title="BFD Protocol Authentication Considerations">
+     <t>
+     Implementations of unsolicited BFD are RECOMMENDED to
+     use BFD authentication; see <xref target="RFC5880"/>.
+     If BFD authentication is used, the Meticulous Keyed SHA1 mechanism SHOULD be used. 
+     </t>
+     <t>
+     In some environments, such as an Internet Exchange Points (IXPs), BFD authentication cannot be used because of the lack of coordination for the operation of the two endpoints of the BFD session.
+     </t>
+     <t>
+     In other environments, such as when BFD is used to track the next hop of static routes, it is possible to use BFD authentication. This comes with the extra cost of configuring matching key-chains between the two endpoints.
+     </t>
 	   </section>
 	   <section title="YANG Module Security Considerations">
       <t>The YANG module specified in this document defines a schema for data
@@ -710,7 +720,9 @@ module ietf-bfd-unsolicited {
          See <xref target="BFD-Security"/>.</t>
       <t>data nodes local-multiplier, desired-min-tx-interval,
       required-min-rx-interval and min-interval all impact the parameters of the unsolicited
-      BFD IP single-hop sessions.</t>
+      BFD IP single-hop sessions. Write operations to these nodes change the
+      rates of BFD packet generation and detection time of the failures of a
+      BFD session.</t>
       </list>
       </t>
 
