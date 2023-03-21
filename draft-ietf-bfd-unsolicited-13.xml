@@ -252,7 +252,7 @@
 	       </t>
 
         <t>
-         When an Unsolicited BFD session goes down, an implementation MAY retain 
+         When an Unsolicited BFD session goes down, an implementation may retain 
          the session state for a period of time.
          Retaining this state can be useful for operational purposes.
         </t>
