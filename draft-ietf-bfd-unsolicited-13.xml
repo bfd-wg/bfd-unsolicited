@@ -234,13 +234,9 @@
          the passive side SHOULD create a matching BFD session toward the active side, 
          unless not permitted by local configuration or policy.</t>
              <t>
-             When the passive side receives an incoming BFD Control packet on a numbered interfaces 
+             When the passive side receives an incoming BFD Control packet on a numbered interface,
              the source address of that packet MUST belong to the subnet of the interface on which the BFD 
-             packet is received. The source address of
-             the BFD Control packet MUST be compared against expected routing protocol peer addresses on that interface.
-             If the source address does not match any expected address, the BFD control packet MUST NOT be processed.
-             The mechanism to obtain the expected addresses is outsde the scope of this document: e.g., they may be configured 
-             or dynamically learnt.</t>
+             packet is received, else the BFD control packet MUST NOT be processed.</t>
 
          <t>
          The passive side MUST then start sending BFD Control packets and perform the necessary 
