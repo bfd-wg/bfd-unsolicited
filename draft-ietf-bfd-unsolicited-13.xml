@@ -678,7 +678,7 @@ module ietf-bfd-unsolicited {
      <t>
      Implementations of unsolicited BFD are RECOMMENDED to
      use BFD authentication; see <xref target="RFC5880"/>.
-     If BFD authentication is used, the Meticulous Keyed SHA1 mechanism SHOULD be used. 
+     If BFD authentication is used, the strongest BFD authentication mechanism that is supported MUST be used.
      </t>
      <t>
      In some environments, such as an Internet Exchange Points (IXPs), BFD authentication cannot be used because of the lack of coordination for the operation of the two endpoints of the BFD session.
