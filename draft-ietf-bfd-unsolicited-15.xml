@@ -331,7 +331,7 @@ module: ietf-bfd-unsolicited
 	  <preamble/>
 
           <artwork align="left"><![CDATA[
-<CODE BEGINS> file "ietf-bfd-unsolicited@2023-04-21.yang"
+<CODE BEGINS> file "ietf-bfd-unsolicited@2023-04-22.yang"
 module ietf-bfd-unsolicited {
 
   yang-version 1.1;
@@ -401,7 +401,7 @@ module ietf-bfd-unsolicited {
 
   reference "RFC YYYY";
 
-  revision 2023-04-21 {
+  revision 2023-04-22 {
     description
       "Initial revision.";
     reference
@@ -422,18 +422,22 @@ module ietf-bfd-unsolicited {
   /*
    * Type Definitions
    */
-  typedef role {
-    type enumeration {
-      enum active {
-        description "Active role";
-      }
-      enum passive {
-        description "Passive role";
-      }
-    }
+  identity role {
     description
-      "Role of local system during BFD session initialization.";
-    reference 
+      "Base identity from which all roles are derived.
+       Role of local system during BFD session initialization.";
+  }
+  identity active {
+    base "bfd-unsol:role";
+    description "Active role";
+    reference
+      "RFC5880: Bidirectional Forwarding Detection (BFD),
+       Section 6.1";
+  }
+  identity passive {
+    base "bfd-unsol:role";
+    description "Passive role";
+    reference
       "RFC5880: Bidirectional Forwarding Detection (BFD),
        Section 6.1";
   }
@@ -522,7 +526,9 @@ module ietf-bfd-unsolicited {
     description
       "Augmentation for BFD unsolicited on IP single-hop session";
       leaf role {
-        type bfd-unsol:role;
+        type identityref {
+          base "bfd-unsol:role";
+        }
         config false;
         description "Role.";
       }
