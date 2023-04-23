@@ -622,9 +622,9 @@ module ietf-bfd-unsolicited {
 
 	<section title="Acknowledgments"> 
 
-	<t>Authors would like to thank Acee Lindem, Greg Mirsky, Jeffrey Haas, 
-      Raj Chetan, Tom Petch, Henning Rogge, Mahesh Jethanandani, Gyan Mishra, John Scudder
-      and Dan Romascanu for their review and valuable input.</t>
+	<t>Authors would like to thank Acee Lindem, Alvaro Retana, Dan Romascanu, Derek Atkins, Greg Mirsky, Gyan Mishra, Henning Rogge, Jeffrey Haas,
+      John Scudder, Lars Eggert, Magnus Westerlund, Mahesh Jethanandani, Murray Kucherawy, Raj Chetan, Robert Wilton, Roman Danyliw, Tom Petch,
+      and Zaheduzzaman Sarker for their review and valuable input.</t>
 
 	</section> 
 
