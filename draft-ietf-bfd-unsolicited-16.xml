@@ -287,7 +287,7 @@
             </list>
             If configuration exists at both levels, per-interface configuration takes precedence over global configuration.
             </t>
-            <t>For operational data, a new "unsolicited" container has been added for BFD IP single-hop sessions.</t>
+            <t>For operational data, a new "role" leaf node has been added for BFD IP single-hop sessions.</t>
             <t>The tree diagram below uses the graphical representation of data models, as defined in <xref target="RFC8340"/>.</t>
         <figure align="left">
           <preamble/>
